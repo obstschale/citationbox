@@ -1,0 +1,16 @@
+#citation-box {
+	padding: 30px;
+	background-color: #D6E8F2;
+	border-bottom: 5px solid #5CACE2;
+	list-style: none;
+}
+
+#citation-box a {
+	color: #5CACE2;
+	font-weight: none;
+	text-decoration: none;
+}
+
+#citation-box a:hover {
+	color: #006385;
+}
