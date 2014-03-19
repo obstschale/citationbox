@@ -15,9 +15,79 @@ define('CB_OPTION_NAME', 'cb_options' );
 $plugin = plugin_basename( __FILE__ );
 
 function cb_setup() {
-	register_setting( 'citationbox_options', CB_OPTION_NAME, 'cb_validate' );
+	register_setting(
+		'citationbox_options',
+		CB_OPTION_NAME,
+		'cb_validate'
+	);
+
+	add_settings_section(
+		'citationbox_section',
+		__( 'General Settings', TEXTDOMAIN ),
+		'cb_general_settings',
+		'citationbox_options'
+	);
+
+	add_settings_field(
+		'cb_single',
+		__( 'Single', TEXTDOMAIN ),
+		'cb_setting_single',
+		'citationbox_options',
+		'citationbox_section'
+	);
+
+	add_settings_field(
+		'cb_page',
+		__( 'Page', TEXTDOMAIN ),
+		'cb_setting_page',
+		'citationbox_options',
+		'citationbox_section'
+	);
+
+	add_settings_field(
+		'cb_home',
+		__( 'Home', TEXTDOMAIN ),
+		'cb_setting_home',
+		'citationbox_options',
+		'citationbox_section'
+	);
+
 }
 add_action( 'admin_init', 'cb_setup' );
+
+function cb_general_settings() {
+	echo "<p>" . _e( 'General Settings for Citation Box Plugin', TEXTDOMAIN ) . "</p>";
+}
+
+function cb_setting_single() {
+	$options = get_option( CB_OPTION_NAME );
+	?>
+	<input type="checkbox" name="<?php echo CB_OPTION_NAME?>[single]"
+	<?php if ( isset( $options['single'] ) and $options['single'] ): ?>
+		checked
+	<?php endif ?>/>
+	<p class="description"><?php _e( 'Display Citation Box on single post pages', TEXTDOMAIN ); ?></p>
+<?php }
+
+function cb_setting_page() {
+	$options = get_option( CB_OPTION_NAME );
+	?>
+	<input type="checkbox" name="<?php echo CB_OPTION_NAME?>[page]"
+	<?php if ( isset( $options['page'] ) and $options['page'] ): ?>
+		checked
+	<?php endif ?>/>
+	<p class="description"><?php _e( 'Display Citation Box on pages', TEXTDOMAIN ); ?></p>
+<?php }
+
+function cb_setting_home() {
+	$options = get_option( CB_OPTION_NAME );
+	?>
+	<input type="checkbox" name="<?php echo CB_OPTION_NAME?>[home]"
+	<?php if ( isset( $options['home'] ) and $options['home'] ): ?>
+		checked
+	<?php endif ?>/>
+	<p class="description"><?php _e( 'Display Citation Box on home page', TEXTDOMAIN ); ?></p>
+<?php }
 
 function cb_add_page() {
 	add_options_page(
@@ -25,51 +95,23 @@ function cb_add_page() {
 		'Citation Box',
 		'manage_options',
 		'citationbox',
-		'cb_do_options_page'
+		'cb_options_page'
 	);
 }
 add_action( 'admin_menu', 'cb_add_page' );
 
 // Print the menu page itself
-function cb_do_options_page() {
+function cb_options_page() {
 	$options = get_option( CB_OPTION_NAME );
 	?>
 	<div class="wrap">
 		<h2><?php _e( 'Citation Box Options', TEXTDOMAIN ); ?></h2>
 		<form method="post" action="options.php">
+			<?php wp_nonce_field( 'update-options' ); ?>
 			<?php settings_fields( 'citationbox_options' ); ?>
-			<table class="form-table">
-				<tr valign="top"><th scope="row"><?php _e( 'Single:', TEXTDOMAIN ); ?></th>
-					<td>
-						<input type="checkbox" name="<?php echo CB_OPTION_NAME?>[single]"
-						<?php if ( isset( $options['single'] ) and $options['single'] ): ?>
-							checked
-						<?php endif ?>/>
-						<p class="description"><?php _e( 'Display Citation Box on single post pages', TEXTDOMAIN ); ?></p>
-					</td>
-				</tr>
-				<tr valign="top"><th scope="row"><?php _e( 'Page:', TEXTDOMAIN ); ?></th>
-					<td>
-						<input type="checkbox" name="<?php echo CB_OPTION_NAME?>[page]"
-						<?php if ( isset( $options['page'] ) and $options['page'] ): ?>
-							checked
-						<?php endif ?>/>
-						<p class="description"><?php _e( 'Display Citation Box on pages', TEXTDOMAIN ); ?></p>
-					</td>
-				</tr>
-				<tr valign="top"><th scope="row"><?php _e( 'Home:', TEXTDOMAIN ); ?></th>
-					<td>
-						<input type="checkbox" name="<?php echo CB_OPTION_NAME?>[home]"
-						<?php if ( isset( $options['home'] ) and $options['home'] ): ?>
-							checked
-						<?php endif ?>/>
-						<p class="description"><?php _e( 'Display Citation Box on home page', TEXTDOMAIN ); ?></p>
-					</td>
-				</tr>
-			</table>
-			<p class="submit">
-				<input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
-			</p>
+			<?php do_settings_sections( 'citationbox_options' ); ?>
+
+			<?php submit_button(); ?>
 		</form>
 	</div><?php
 }
