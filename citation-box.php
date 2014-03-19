@@ -11,31 +11,46 @@
 
 function cb_find_links( $content ) {
 
-	if ( is_single() ) {
-		$box = array();
-		$domDoc = new DOMDocument;
-        $domDoc->loadHTML( $content );
 
+	if ( is_single() ):
+		$box = array();
+		$domDoc = new DOMDocument( '1.0', 'utf-8' );
+		$domDoc->loadHTML(
+			'<?xml encoding="UTF-8">'
+			. $content
+		);
 		$links = $domDoc->getElementsByTagName('a');
+
 		$i = $links->length - 1;
+		// $count = 1;
 		while ( $i > -1 ):
 			$link = $links->item( $i );
 			$ignore = false;
-			$count = $i + 1;
+			$count = $i;
 
-			$text = $link->nodeValue . "[$count]";
-			$refElement = $domDoc->createElement( 'span', $text );
-			// $countLink = $domDoc->createElement( 'a', "[$count]" );
-			// $countLink->setAttribute( 'href', '#citation-box' );
-			// $refElement->appendChild( $countLink );
+			if ( $link->hasAttribute( 'href' )
+				and strcmp( $link->firstChild->nodeName, 'img' ) != 0 ) {
 
-			$boxElement = $link;
-			$boxElement->nodeValue = $boxElement->getAttribute( 'href' );
-			$box[$count] = $boxElement;
+					$text = $link->nodeValue . "[$count]";
+					$refElement = $domDoc->createElement( 'span', $text );
+					// $countLink = $domDoc->createElement( 'a', "[$count]" );
+					// $countLink->setAttribute( 'href', '#citation-box' );
+					// $refElement->appendChild( $countLink );
 
-			$link->parentNode->replaceChild( $refElement, $link );
+					$boxElement = $link;
+					$url = htmlspecialchars( $boxElement->getAttribute( 'href' ) );
+					if ( strlen( $url ) > 40 ) {
+						$url = substr( $url, 0, 40 );
+						$url .= '...';
+					}
+					$boxElement->nodeValue = $url;
+					$box[$count] = $boxElement;
+					$link->parentNode->replaceChild( $refElement, $link );
+					$count++;
+			}
 
 			$i--;
+
 		endwhile;
 
 		$boxObject = new ArrayObject( $box );
@@ -44,6 +59,8 @@ function cb_find_links( $content ) {
 		$list = $domDoc->createElement( 'ul' );
 		$list->setAttribute( 'id', 'citation-box' );
 		$domDoc->appendChild( $list );
+		$cb_title = $domDoc->createElement( 'h3', __( 'Links' ) );
+		$list->appendChild( $cb_title );
 
 		foreach ( $boxObject as $count => $node):
 			$item = $domDoc->createElement( 'li' );
@@ -54,7 +71,7 @@ function cb_find_links( $content ) {
 		endforeach;
 
 		return $domDoc->saveHTML();
-	}
+	endif;
 
 	return $content;
 }
