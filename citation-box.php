@@ -12,7 +12,7 @@
 function cb_find_links( $content ) {
 
 
-	if ( is_single() ):
+	// if ( is_single() ):
 		$box = array();
 		$domDoc = new DOMDocument( '1.0', 'utf-8' );
 		$domDoc->loadHTML(
@@ -27,7 +27,8 @@ function cb_find_links( $content ) {
 			$link = $links->item( $i );
 			$ignore = false;
 			if ( $link->hasAttribute( 'href' )
-				and strcmp( $link->firstChild->nodeName, 'img' ) != 0 ) {
+				and strcmp( $link->firstChild->nodeName, 'img' ) != 0
+				and strcmp( $link->getAttribute( 'class' ), 'more-link' ) != 0 ) {
 				$count++;
 			}
 			$i--;
@@ -39,7 +40,8 @@ function cb_find_links( $content ) {
 			$ignore = false;
 
 			if ( $link->hasAttribute( 'href' )
-				and strcmp( $link->firstChild->nodeName, 'img' ) != 0 ) {
+				and strcmp( $link->firstChild->nodeName, 'img' ) != 0
+				and strcmp( $link->getAttribute( 'class' ), 'more-link' ) != 0 ) {
 
 					$text = $link->nodeValue . "[$count]";
 					$refElement = $domDoc->createElement( 'span', $text );
@@ -83,16 +85,16 @@ function cb_find_links( $content ) {
 
 			return $domDoc->saveHTML();
 		endif;
-	endif;
+	// endif;
 
 	return $content;
 }
 add_filter( 'the_content', 'cb_find_links' );
 
 function cb_style() {
-	if ( is_single() ) {
+	// if ( is_single() ) {
 		wp_enqueue_style( 'citation-box-style', plugins_url( 'assets/citation-box.css', __FILE__ ) );
-	}
+	// }
 }
 add_action( 'wp_enqueue_scripts', 'cb_style' );
 
