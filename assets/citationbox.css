@@ -1,4 +1,4 @@
-#citation-box {
+#citationbox {
 	padding: 30px;
 	margin: 20px 0 0 0;
 	background-color: #D6E8F2;
@@ -6,12 +6,12 @@
 	list-style: none;
 }
 
-#citation-box a {
+#citationbox a {
 	color: #5CACE2;
 	font-weight: none;
 	text-decoration: none;
 }
 
-#citation-box a:hover {
+#citationbox a:hover {
 	color: #006385;
 }
