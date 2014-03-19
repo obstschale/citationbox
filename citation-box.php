@@ -22,11 +22,21 @@ function cb_find_links( $content ) {
 		$links = $domDoc->getElementsByTagName('a');
 
 		$i = $links->length - 1;
-		// $count = 1;
+		$count = 0;
 		while ( $i > -1 ):
 			$link = $links->item( $i );
 			$ignore = false;
-			$count = $i;
+			if ( $link->hasAttribute( 'href' )
+				and strcmp( $link->firstChild->nodeName, 'img' ) != 0 ) {
+				$count++;
+			}
+			$i--;
+		endwhile;
+
+		$i = $links->length - 1;
+		while ( $i > -1 ):
+			$link = $links->item( $i );
+			$ignore = false;
 
 			if ( $link->hasAttribute( 'href' )
 				and strcmp( $link->firstChild->nodeName, 'img' ) != 0 ) {
@@ -46,7 +56,7 @@ function cb_find_links( $content ) {
 					$boxElement->nodeValue = $url;
 					$box[$count] = $boxElement;
 					$link->parentNode->replaceChild( $refElement, $link );
-					$count++;
+					$count--;
 			}
 
 			$i--;
