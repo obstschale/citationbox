@@ -15,7 +15,7 @@ define('CB_OPTION_NAME', 'cb_options' );
 $plugin = plugin_basename( __FILE__ );
 
 function cb_setup() {
-	register_setting( 'citationbox_options', CB_OPTION_NAME);
+	register_setting( 'citationbox_options', CB_OPTION_NAME, 'cb_validate' );
 }
 add_action( 'admin_init', 'cb_setup' );
 
@@ -42,7 +42,7 @@ function cb_do_options_page() {
 				<tr valign="top"><th scope="row"><?php _e( 'Single:', TEXTDOMAIN ); ?></th>
 					<td>
 						<input type="checkbox" name="<?php echo CB_OPTION_NAME?>[single]"
-						<?php if ( isset( $options['single'] ) and 0 == strcmp( $options['single'], 'on' ) ): ?>
+						<?php if ( isset( $options['single'] ) and $options['single'] ): ?>
 							checked
 						<?php endif ?>/>
 						<p class="description"><?php _e( 'Display Citation Box on single post pages', TEXTDOMAIN ); ?></p>
@@ -51,7 +51,7 @@ function cb_do_options_page() {
 				<tr valign="top"><th scope="row"><?php _e( 'Page:', TEXTDOMAIN ); ?></th>
 					<td>
 						<input type="checkbox" name="<?php echo CB_OPTION_NAME?>[page]"
-						<?php if ( isset( $options['page'] ) and 0 == strcmp( $options['page'], 'on' ) ): ?>
+						<?php if ( isset( $options['page'] ) and $options['page'] ): ?>
 							checked
 						<?php endif ?>/>
 						<p class="description"><?php _e( 'Display Citation Box on pages', TEXTDOMAIN ); ?></p>
@@ -60,7 +60,7 @@ function cb_do_options_page() {
 				<tr valign="top"><th scope="row"><?php _e( 'Home:', TEXTDOMAIN ); ?></th>
 					<td>
 						<input type="checkbox" name="<?php echo CB_OPTION_NAME?>[home]"
-						<?php if ( isset( $options['home'] ) and 0 == strcmp( $options['home'], 'on' ) ): ?>
+						<?php if ( isset( $options['home'] ) and $options['home'] ): ?>
 							checked
 						<?php endif ?>/>
 						<p class="description"><?php _e( 'Display Citation Box on home page', TEXTDOMAIN ); ?></p>
@@ -72,6 +72,15 @@ function cb_do_options_page() {
 			</p>
 		</form>
 	</div><?php
+}
+
+function cb_validate( $input ){
+	$valid = array();
+	$valid['single'] = ( isset( $input['single'] ) ) ? true : false;
+	$valid['page'] = ( isset( $input['page'] ) ) ? true : false;
+	$valid['home'] = ( isset( $input['home'] ) ) ? true : false;
+
+	return $valid;
 }
 
 function plugin_add_settings_link( $links ) {
@@ -88,15 +97,15 @@ function cb_run( $content ) {
 	$options = get_option( CB_OPTION_NAME );
 
 	if ( isset( $options['single'] )
-		and 0 == strcmp( $options['single'], 'on' )
+		and $options['single']
 		and is_single()
 
 		or isset( $options['page'] )
-		and 0 == strcmp( $options['page'], 'on' )
+		and $options['page']
 		and is_page()
 
 		or isset( $options['home'] )
-		and 0 == strcmp( $options['home'], 'on' )
+		and $options['home']
 		and is_home()
 	):
 		$content = cb_find_links( $content );
