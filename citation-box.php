@@ -57,6 +57,15 @@ function cb_do_options_page() {
 						<p class="description"><?php _e( 'Display Citation Box on pages', TEXTDOMAIN ); ?></p>
 					</td>
 				</tr>
+				<tr valign="top"><th scope="row"><?php _e( 'Home:', TEXTDOMAIN ); ?></th>
+					<td>
+						<input type="checkbox" name="<?php echo CB_OPTION_NAME?>[home]"
+						<?php if ( isset( $options['home'] ) and 0 == strcmp( $options['home'], 'on' ) ): ?>
+							checked
+						<?php endif ?>/>
+						<p class="description"><?php _e( 'Display Citation Box on home page', TEXTDOMAIN ); ?></p>
+					</td>
+				</tr>
 			</table>
 			<p class="submit">
 				<input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
@@ -81,9 +90,14 @@ function cb_run( $content ) {
 	if ( isset( $options['single'] )
 		and 0 == strcmp( $options['single'], 'on' )
 		and is_single()
+
 		or isset( $options['page'] )
 		and 0 == strcmp( $options['page'], 'on' )
 		and is_page()
+
+		or isset( $options['home'] )
+		and 0 == strcmp( $options['home'], 'on' )
+		and is_home()
 	):
 		$content = cb_find_links( $content );
 		cb_style();
