@@ -53,24 +53,26 @@ function cb_find_links( $content ) {
 
 		endwhile;
 
-		$boxObject = new ArrayObject( $box );
-		$boxObject->ksort();
+		if (sizeof( $box ) > 0 ):
+			$boxObject = new ArrayObject( $box );
+			$boxObject->ksort();
 
-		$list = $domDoc->createElement( 'ul' );
-		$list->setAttribute( 'id', 'citation-box' );
-		$domDoc->appendChild( $list );
-		$cb_title = $domDoc->createElement( 'h3', __( 'Links' ) );
-		$list->appendChild( $cb_title );
+			$list = $domDoc->createElement( 'ul' );
+			$list->setAttribute( 'id', 'citation-box' );
+			$domDoc->appendChild( $list );
+			$cb_title = $domDoc->createElement( 'h3', __( 'Links' ) );
+			$list->appendChild( $cb_title );
 
-		foreach ( $boxObject as $count => $node):
-			$item = $domDoc->createElement( 'li' );
-			$itemCount = $domDoc->createTextNode( "[$count] " );
-			$item->appendChild( $itemCount );
-			$item->appendChild( $node );
-			$list->appendChild( $item );
-		endforeach;
+			foreach ( $boxObject as $count => $node):
+				$item = $domDoc->createElement( 'li' );
+				$itemCount = $domDoc->createTextNode( "[$count] " );
+				$item->appendChild( $itemCount );
+				$item->appendChild( $node );
+				$list->appendChild( $item );
+			endforeach;
 
-		return $domDoc->saveHTML();
+			return $domDoc->saveHTML();
+		endif;
 	endif;
 
 	return $content;
