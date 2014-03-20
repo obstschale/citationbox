@@ -9,7 +9,7 @@ __License:__ MIT
 
 This is a simple WordPress Plugin which takes the content and scans it for links and puts them at the end of a page in a box. And this looks like this.
 
-![Example of a Citation Box](screenshots/citationbox.png)
+![Example of a Citation Box](screenshots/Citationbox.png)
 
 Installation
 ------------
@@ -29,7 +29,7 @@ BTW: If no links are found in a post / page also no Citation Box is shown.
 
 ### Settings
 
-![Screenshot of settings](screenshots/settings.png)
+![Screenshot of settings](screenshots/Settings.png)
 
 
 Languages
