@@ -1,10 +1,21 @@
 Citation Box
 ============
+__Author:__ [Hans-Helge Buerger](http://hanshelgebuerger.de)
+__Date:__ 20. March 2014
+__Version:__ v0.1
+__License:__ MIT
+
+***
 
 This is a simple WordPress Plugin which takes the content and scans it for links and puts them at the end of a page in a box. And this looks like this.
 
-
 ![Example of a Citation Box](screenshots/citationbox.png)
+
+Installation
+------------
+
+* Download the [`ZIP` File](https://github.com/obstschale/citationbox/archive/master.zip) and upload it via your backend in WordPress
+* Upload the `citation-box` folder to `/wp-content/plugins/` directory
 
 In more detail
 --------------
