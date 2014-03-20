@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Citation Box 0.1\n"
-"POT-Creation-Date: 2014-03-20 17:54+0100\n"
-"PO-Revision-Date: 2014-03-20 17:54+0100\n"
+"POT-Creation-Date: 2014-03-20 17:56+0100\n"
+"PO-Revision-Date: 2014-03-20 17:56+0100\n"
 "Last-Translator: Hans-Helge Buerger <mail@hig-podcast.de>\n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -80,6 +80,10 @@ msgstr "Wähle eine Farbe"
 #: ../citation-box.php:267
 msgid "Citation Box Options"
 msgstr "Citation Box Optionen"
+
+#: ../citation-box.php:300
+msgid "Settings"
+msgstr "Einstellungen"
 
 #: ../citation-box.php:392
 msgid "Links"
