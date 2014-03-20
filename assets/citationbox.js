@@ -20,14 +20,22 @@ jQuery(document).ready(function($) {
 	$('#color_reset').click( function(e) {
 		$('#color_bg').val( '#D6E8F2' );
 		$('#color_bg').css( 'background-color', '#D6E8F2' );
-		$('#color_bg').css( 'color', '#000' );
+		$('#color_bg').css( 'color', '#000000' );
+
 		$('#color_border').val( '#5CACE2' );
 		$('#color_border').css( 'background-color', '#5CACE2' );
+		$('#color_border').css( 'color', '#000000' );
+
 		$('#color_link').val( '#5CACE2' );
-		$('#color_link_hover').css( 'background-color', '#006385' );
+		$('#color_link').css( 'background-color', '#006385' );
+		$('#color_link').css( 'color', '#FFFFFF' );
+
 		$('#color_link_hover').val( '#006385' );
-		$('#color_link').css( 'background-color', '#5CACE2' );
+		$('#color_link_hover').css( 'background-color', '#5CACE2' );
+		$('#color_link_hover').css( 'color', '#FFFFFF' );
+
 		$('#color_text').val( '#000000' );
 		$('#color_text').css( 'background-color', '#000000' );
+		$('#color_text').css( 'color', '#FFFFFF' );
 	});
 });
