@@ -52,6 +52,45 @@ function cb_setup() {
 		'citationbox_section'
 	);
 
+	add_settings_field(
+		'cb_color_bg',
+		__( 'Background Color', TEXTDOMAIN ),
+		'cb_setting_color_bg',
+		'citationbox_options',
+		'citationbox_section'
+	);
+
+	add_settings_field(
+		'cb_color_border',
+		__( 'Bottom Border Color', TEXTDOMAIN ),
+		'cb_setting_color_border',
+		'citationbox_options',
+		'citationbox_section'
+	);
+
+	add_settings_field(
+		'cb_color_link',
+		__( 'Link Color', TEXTDOMAIN ),
+		'cb_setting_color_link',
+		'citationbox_options',
+		'citationbox_section'
+	);
+
+	add_settings_field(
+		'cb_color_text',
+		__( 'Text Color', TEXTDOMAIN ),
+		'cb_setting_color_text',
+		'citationbox_options',
+		'citationbox_section'
+	);
+
+	add_settings_field(
+		'cb_color_reset',
+		__( 'Reset Colors', TEXTDOMAIN ),
+		'cb_setting_color_reset',
+		'citationbox_options',
+		'citationbox_section'
+	);
 }
 add_action( 'admin_init', 'cb_setup' );
 
@@ -89,16 +128,104 @@ function cb_setting_home() {
 	<p class="description"><?php _e( 'Display Citation Box on home page', TEXTDOMAIN ); ?></p>
 <?php }
 
+function cb_setting_color_bg() {
+	$options = get_option( CB_OPTION_NAME );
+	?>
+	<div class="color-picker" style="position: relative;">
+		<input type="text" name="<?php echo CB_OPTION_NAME?>[color_bg]"
+			value="<?php if ( isset( $options['color_bg'] ) ):
+				echo esc_attr( $options['color_bg'] );
+			else:
+				echo '#D6E8F2';
+			endif ?>" id="color_bg" />
+		<input type='button' class='pickcolor button-secondary' value='<?php _e( 'Select Color', TEXTDOMAIN ); ?>' >
+		<div class="colorpicker_bg" style='z-index: 100; background:#eee; border:1px solid #ccc; position:absolute; display:none;'></div>
+	</div>
+<?php }
+
+function cb_setting_color_border() {
+	$options = get_option( CB_OPTION_NAME );
+	?>
+	<div class="color-picker" style="position: relative;">
+		<input type="text" name="<?php echo CB_OPTION_NAME?>[color_border]"
+			value="<?php if ( isset( $options['color_border'] ) ):
+				echo esc_attr( $options['color_border'] );
+			else:
+				echo '#5CACE2';
+			endif ?>" id="color_border" />
+		<input type='button' class='pickcolor button-secondary' value='<?php _e( 'Select Color', TEXTDOMAIN ); ?>' >
+		<div class="colorpicker_border" style='z-index: 100; background:#eee; border:1px solid #ccc; position:absolute; display:none;'></div>
+	</div>
+<?php }
+
+function cb_setting_color_link() {
+	$options = get_option( CB_OPTION_NAME );
+	?>
+	<div class="color-picker" style="position: relative;">
+		<input type="text" name="<?php echo CB_OPTION_NAME?>[color_link]"
+			value="<?php if ( isset( $options['color_link'] ) ):
+				echo esc_attr( $options['color_link'] );
+			else:
+				echo '#5CACE2';
+			endif ?>" id="color_link" />
+		<input type='button' class='pickcolor button-secondary' value='<?php _e( 'Select Color', TEXTDOMAIN ); ?>' >
+		<div class="colorpicker_link" style='z-index: 100; background:#eee; border:1px solid #ccc; position:absolute; display:none;'></div>
+	</div>
+<?php }
+
+function cb_setting_color_text() {
+	$options = get_option( CB_OPTION_NAME );
+	?>
+	<div class="color-picker" style="position: relative;">
+		<input type="text" name="<?php echo CB_OPTION_NAME?>[color_text]"
+			value="<?php if ( isset( $options['color_text'] ) ):
+				echo esc_attr( $options['color_text'] );
+			else:
+				echo '#000000';
+			endif ?>" id="color_text" />
+		<input type='button' class='pickcolor button-secondary' value='<?php _e( 'Select Color', TEXTDOMAIN ); ?>' >
+		<div class="colorpicker_text" style='z-index: 100; background:#eee; border:1px solid #ccc; position:absolute; display:none;'></div>
+	</div>
+<?php }
+
+function cb_setting_color_reset() {
+	?>
+	<div class="color-picker" style="position: relative;">
+		<input type='button' id="color_reset" class='button-secondary' value='<?php _e( 'Reset Colors', TEXTDOMAIN ); ?>' >
+	</div>
+<?php }
+
 function cb_add_page() {
-	add_options_page(
+	$page = add_options_page(
 		'Citation Box Settings',
 		'Citation Box',
 		'manage_options',
 		'citationbox',
 		'cb_options_page'
 	);
+	// add_action( 'admin_print_styles-' . $page, 'cb_admin_scripts' );
+	add_action( 'admin_enqueue_scripts', 'cb_admin_scripts' );
 }
 add_action( 'admin_menu', 'cb_add_page' );
+
+function cb_wp_head() {
+	$options = get_option( CB_OPTION_NAME );
+	$color_bg = ( isset( $options['color_bg'] ) ) ? $options['color_bg'] : '';
+	$color_border = ( isset( $options['color_border'] ) ) ? $options['color_border'] : '';
+	$color_link = ( isset( $options['color_link'] ) ) ? $options['color_link'] : '';
+	$color_text = ( isset( $options['color_text'] ) ) ? $options['color_text'] : '';
+
+	echo "<style> #citationbox {
+		color: $color_text;
+		background-color: $color_bg;
+		border-bottom-color: $color_border;
+	}
+	#citationbox a {
+		color: $color_link;
+	}
+	</style>";
+}
+add_action( 'wp_head', 'cb_wp_head' );
 
 // Print the menu page itself
 function cb_options_page() {
@@ -116,11 +243,22 @@ function cb_options_page() {
 	</div><?php
 }
 
+function cb_admin_scripts() {
+	wp_enqueue_style( 'farbtastic' );
+	wp_enqueue_script( 'farbtastic' );
+	wp_enqueue_script( 'citationbox-script', plugins_url( 'assets/citationbox.js', __FILE__ ), array( 'farbtastic', 'jquery' ) );
+
+}
+
 function cb_validate( $input ){
 	$valid = array();
 	$valid['single'] = ( isset( $input['single'] ) ) ? true : false;
 	$valid['page'] = ( isset( $input['page'] ) ) ? true : false;
 	$valid['home'] = ( isset( $input['home'] ) ) ? true : false;
+	$valid['color_bg'] = ( isset( $input['color_bg'] ) ) ? $input['color_bg'] : '#D6E8F2';
+	$valid['color_border'] = ( isset( $input['color_border'] ) ) ? $input['color_border'] : '#5CACE2';
+	$valid['color_link'] = ( isset( $input['color_link'] ) ) ? $input['color_link'] : '#5CACE2';
+	$valid['color_text'] = ( isset( $input['color_text'] ) ) ? $input['color_text'] : '#000000';
 
 	return $valid;
 }
