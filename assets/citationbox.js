@@ -3,6 +3,7 @@ jQuery(document).ready(function($) {
 	$('.colorpicker_bg').farbtastic( '#color_bg' );
 	$('.colorpicker_border').farbtastic( '#color_border' );
 	$('.colorpicker_link').farbtastic( '#color_link' );
+	$('.colorpicker_link_hover').farbtastic( '#color_link_hover' );
 	$('.colorpicker_text').farbtastic( '#color_text' );
 
 	$('.pickcolor').click( function(e) {
@@ -23,6 +24,8 @@ jQuery(document).ready(function($) {
 		$('#color_border').val( '#5CACE2' );
 		$('#color_border').css( 'background-color', '#5CACE2' );
 		$('#color_link').val( '#5CACE2' );
+		$('#color_link_hover').css( 'background-color', '#006385' );
+		$('#color_link_hover').val( '#006385' );
 		$('#color_link').css( 'background-color', '#5CACE2' );
 		$('#color_text').val( '#000000' );
 		$('#color_text').css( 'background-color', '#000000' );

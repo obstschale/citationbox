@@ -77,6 +77,14 @@ function cb_setup() {
 	);
 
 	add_settings_field(
+		'cb_color_link_hover',
+		__( 'Link Hover Color', TEXTDOMAIN ),
+		'cb_setting_color_link_hover',
+		'citationbox_options',
+		'citationbox_section'
+	);
+
+	add_settings_field(
 		'cb_color_text',
 		__( 'Text Color', TEXTDOMAIN ),
 		'cb_setting_color_text',
@@ -173,6 +181,21 @@ function cb_setting_color_link() {
 	</div>
 <?php }
 
+function cb_setting_color_link_hover() {
+	$options = get_option( CB_OPTION_NAME );
+	?>
+	<div class="color-picker" style="position: relative;">
+		<input type="text" name="<?php echo CB_OPTION_NAME?>[color_link_hover]"
+			value="<?php if ( isset( $options['color_link_hover'] ) ):
+				echo esc_attr( $options['color_link_hover'] );
+			else:
+				echo '#006385';
+			endif ?>" id="color_link_hover" />
+		<input type='button' class='pickcolor button-secondary' value='<?php _e( 'Select Color', TEXTDOMAIN ); ?>' >
+		<div class="colorpicker_link_hover" style='z-index: 100; background:#eee; border:1px solid #ccc; position:absolute; display:none;'></div>
+	</div>
+<?php }
+
 function cb_setting_color_text() {
 	$options = get_option( CB_OPTION_NAME );
 	?>
@@ -213,6 +236,7 @@ function cb_wp_head() {
 	$color_bg = ( isset( $options['color_bg'] ) ) ? $options['color_bg'] : '';
 	$color_border = ( isset( $options['color_border'] ) ) ? $options['color_border'] : '';
 	$color_link = ( isset( $options['color_link'] ) ) ? $options['color_link'] : '';
+	$color_link_hover = ( isset( $options['color_link_hover'] ) ) ? $options['color_link_hover'] : '';
 	$color_text = ( isset( $options['color_text'] ) ) ? $options['color_text'] : '';
 
 	echo "<style> #citationbox {
@@ -222,6 +246,9 @@ function cb_wp_head() {
 	}
 	#citationbox a {
 		color: $color_link;
+	}
+	#citationbox a:hover {
+		color: $color_link_hover;
 	}
 	</style>";
 }
@@ -258,6 +285,7 @@ function cb_validate( $input ){
 	$valid['color_bg'] = ( isset( $input['color_bg'] ) ) ? $input['color_bg'] : '#D6E8F2';
 	$valid['color_border'] = ( isset( $input['color_border'] ) ) ? $input['color_border'] : '#5CACE2';
 	$valid['color_link'] = ( isset( $input['color_link'] ) ) ? $input['color_link'] : '#5CACE2';
+	$valid['color_link_hover'] = ( isset( $input['color_link_hover'] ) ) ? $input['color_link_hover'] : '#006385';
 	$valid['color_text'] = ( isset( $input['color_text'] ) ) ? $input['color_text'] : '#000000';
 
 	return $valid;
