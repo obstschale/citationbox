@@ -1,9 +1,9 @@
 Citation Box
 ============
-__Author:__ [Hans-Helge Buerger](http://hanshelgebuerger.de)
-__Date:__ 20. March 2014
-__Version:__ v0.1
-__License:__ MIT
+__Author:__ [Hans-Helge Buerger](http://hanshelgebuerger.de)  
+__Date:__ 20. March 2014  
+__Version:__ v0.1  
+__License:__ MIT  
 
 ***
 
