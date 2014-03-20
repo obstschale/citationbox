@@ -2,7 +2,7 @@
 /*
  * Plugin Name: Citation Box
  * Plugin URI: https://github.com/obstschale/citationbox
- * Description: Looks for Links in a post and displays them in a citation box at the end of each post
+ * Description: Looks for Links in a posts / pages and displays them in a citation box at the end of each site
  * Version: 0.1
  * Author: Hans-Helge Buerger
  * Author URI: http://hanshelgebuerger.de/
@@ -297,7 +297,7 @@ function cb_validate( $input ){
 }
 
 function plugin_add_settings_link( $links ) {
-	$settings_link = '<a href="options-general.php?page=citationbox">Settings</a>';
+	$settings_link = '<a href="options-general.php?page=citationbox">' . __( 'Settings', TEXTDOMAIN ) . '</a>';
 	array_push( $links, $settings_link );
 	return $links;
 }
