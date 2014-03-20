@@ -1,9 +1,9 @@
 <?php
 /*
  * Plugin Name: Citation Box
- * Plugin URI: http://gautamthapar.me/
+ * Plugin URI: https://github.com/obstschale/citationbox
  * Description: Looks for Links in a post and displays them in a citation box at the end of each post
- * Version: 0.1dev
+ * Version: 0.1
  * Author: Hans-Helge Buerger
  * Author URI: http://hanshelgebuerger.de/
  * License: GPLv3 or later
@@ -13,6 +13,11 @@
 define('TEXTDOMAIN', 'citationbox');
 define('CB_OPTION_NAME', 'cb_options' );
 $plugin = plugin_basename( __FILE__ );
+
+function cb_init() {
+	load_plugin_textdomain( TEXTDOMAIN, false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+}
+add_action( 'plugins_loaded', 'cb_init' );
 
 function cb_setup() {
 	register_setting(
@@ -30,7 +35,7 @@ function cb_setup() {
 
 	add_settings_field(
 		'cb_single',
-		__( 'Single', TEXTDOMAIN ),
+		__( 'Post', TEXTDOMAIN ),
 		'cb_setting_single',
 		'citationbox_options',
 		'citationbox_section'
