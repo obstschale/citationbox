@@ -1,8 +1,8 @@
 Citation Box
 ============
 __Author:__ [Hans-Helge Buerger](http://hanshelgebuerger.de)  
-__Date:__ 20. March 2014  
-__Version:__ v0.1  
+__Date:__ 21. March 2014  
+__Version:__ v0.1.1  
 __License:__ MIT  
 
 ***
@@ -38,6 +38,19 @@ Languages
 _Citation Box_ is translated in:
 
 * German: special thanks to [myself](https://github.com/obstschale).
+
+Changelog
+---------
+
+### v0.1.1 - 21. March 2014
+
+* [FIX] Load Farbtastic and JS-Script only on CB Settings page otherwise an `Uncaught TypeError` is thrown because `farbtastic` is undefined
+
+### v0.1 - 20. March 2014
+
+* [FEATURE] Citation Box for posts, pages, and home page
+* [FEATURE] Settings: choose where Citation Box should be displayed and choose own colors
+
 
 License
 -------

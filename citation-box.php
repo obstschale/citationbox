@@ -3,7 +3,7 @@
  * Plugin Name: Citation Box
  * Plugin URI: https://github.com/obstschale/citationbox
  * Description: Looks for Links in a posts / pages and displays them in a citation box at the end of each site
- * Version: 0.1
+ * Version: 0.1.1
  * Author: Hans-Helge Buerger
  * Author URI: http://hanshelgebuerger.de/
  * License: GPLv3 or later
@@ -224,14 +224,15 @@ function cb_setting_color_reset() {
 <?php }
 
 function cb_add_page() {
-	$page = add_options_page(
+	global $cb_setting_page;
+
+	$cb_setting_page = add_options_page(
 		'Citation Box Settings',
 		'Citation Box',
 		'manage_options',
 		'citationbox',
 		'cb_options_page'
 	);
-	// add_action( 'admin_print_styles-' . $page, 'cb_admin_scripts' );
 	add_action( 'admin_enqueue_scripts', 'cb_admin_scripts' );
 }
 add_action( 'admin_menu', 'cb_add_page' );
@@ -276,6 +277,17 @@ function cb_options_page() {
 }
 
 function cb_admin_scripts() {
+	global $cb_setting_page;
+	$screen = get_current_screen();
+
+	/*
+	 * Check if current screen is My Admin Page
+	 * Don't add help tab if it's not
+	 */
+	if ( $screen->id != $cb_setting_page )
+		return;
+
+	// include farbtastic and own JS
 	wp_enqueue_style( 'farbtastic' );
 	wp_enqueue_script( 'farbtastic' );
 	wp_enqueue_script( 'citationbox-script', plugins_url( 'assets/citationbox.js', __FILE__ ), array( 'farbtastic', 'jquery' ) );
