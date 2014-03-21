@@ -27,11 +27,11 @@ jQuery(document).ready(function($) {
 		$('#color_border').css( 'color', '#000000' );
 
 		$('#color_link').val( '#5CACE2' );
-		$('#color_link').css( 'background-color', '#006385' );
-		$('#color_link').css( 'color', '#FFFFFF' );
+		$('#color_link').css( 'background-color', '#5CACE2' );
+		$('#color_link').css( 'color', '#000000' );
 
 		$('#color_link_hover').val( '#006385' );
-		$('#color_link_hover').css( 'background-color', '#5CACE2' );
+		$('#color_link_hover').css( 'background-color', '#006385' );
 		$('#color_link_hover').css( 'color', '#FFFFFF' );
 
 		$('#color_text').val( '#000000' );

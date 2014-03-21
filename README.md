@@ -42,6 +42,10 @@ _Citation Box_ is translated in:
 Changelog
 ---------
 
+### next relase
+
+* [FIX] minor bug fixes
+
 ### v0.1.1 - 21. March 2014
 
 * [FIX] Load Farbtastic and JS-Script only on CB Settings page otherwise an `Uncaught TypeError` is thrown because `farbtastic` is undefined
