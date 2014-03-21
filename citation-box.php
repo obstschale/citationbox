@@ -3,7 +3,7 @@
  * Plugin Name: Citation Box
  * Plugin URI: https://github.com/obstschale/citationbox
  * Description: Looks for Links in a posts / pages and displays them in a citation box at the end of each site
- * Version: 0.1
+ * Version: 0.1.1
  * Author: Hans-Helge Buerger
  * Author URI: http://hanshelgebuerger.de/
  * License: GPLv3 or later
