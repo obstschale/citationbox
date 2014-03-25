@@ -3,7 +3,7 @@ Citation Box
 __Author:__ [Hans-Helge Buerger](http://hanshelgebuerger.de)  
 __Date:__ 21. March 2014  
 __Version:__ v0.1.1  
-__License:__ MIT  
+__License:__ GPLv2 or later  
 
 ***
 

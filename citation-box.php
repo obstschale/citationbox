@@ -6,7 +6,7 @@
  * Version: 0.1.1
  * Author: Hans-Helge Buerger
  * Author URI: http://hanshelgebuerger.de/
- * License: GPLv3 or later
+ * License: GPLv2 or later
  * Text Domain: citationbox
  */
 
